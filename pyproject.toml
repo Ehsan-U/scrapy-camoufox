@@ -1,0 +1,20 @@
+[tool.black]
+line-length = 99
+
+[tool.poetry]
+name = "scrapy-camoufox"
+version = "0.0.2"
+description = "Camoufox Integration For Scrapy"
+authors = ["Ehsan U."]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Scrapy = "^2.12.0"
+playwright = "^1.49.0"
+camoufox = {extras = ["geoip"], version = "^0.4.3"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
