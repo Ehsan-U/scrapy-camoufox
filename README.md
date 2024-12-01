@@ -1,6 +1,6 @@
 # scrapy-camoufox: Camoufox integration for Scrapy
-[![version](https://img.shields.io/pypi/v/scrapy-playwright.svg)](https://pypi.python.org/pypi/scrapy-playwright)
-[![pyversions](https://img.shields.io/pypi/pyversions/scrapy-playwright.svg)](https://pypi.python.org/pypi/scrapy-playwright)
+[![version](https://img.shields.io/pypi/v/scrapy-camoufox.svg)](https://pypi.python.org/pypi/scrapy-camoufox)
+[![pyversions](https://img.shields.io/pypi/pyversions/scrapy-camoufox.svg)](https://pypi.python.org/pypi/scrapy-camoufox)
 
 
 A [Scrapy](https://github.com/scrapy/scrapy) Download Handler which performs requests using
