@@ -106,7 +106,7 @@ for a list of supported keyword arguments.
 Camoufox will generate device information for you based on the following parameters.
 
 ```python
-PLAYWRIGHT_LAUNCH_OPTIONS = {
+CAMOUFOX_LAUNCH_OPTIONS = {
     # Operating system to use for the fingerprint generation. 
     # available os: ['windows', 'macos', 'linux']
     "os": ["macos"],
@@ -126,7 +126,7 @@ Note: While this sets the screen dimensions, it has very light impact on the siz
 Extra feature configuration and quality of life options.
 
 ```python
-PLAYWRIGHT_LAUNCH_OPTIONS = {
+CAMOUFOX_LAUNCH_OPTIONS = {
     # Humanize the cursor movement. Takes either True, or the MAX duration in seconds of the cursor movement.
     "humanize": True,
     # Defaults to False. If you are running linux, passing 'virtual' will use Xvfb.
@@ -150,7 +150,7 @@ Note: Camoufox will automatically generate a window size for you. Using a fixed 
 Prevent proxy detection by matching your geolocation & locale with your target IP. This will populate the Geolocation & Intl properties for you.
 
 ```python
-PLAYWRIGHT_LAUNCH_OPTIONS = {
+CAMOUFOX_LAUNCH_OPTIONS = {
     # Calculates longitude, latitude, timezone, country, & locale based on the IP address. Pass the target IP address to use, or True to find the IP address automatically.
     "geoip": "203.0.113.0",
     "proxy": ...,
@@ -165,7 +165,7 @@ Shortcuts for common Firefox preferences and security toggles.
 
 
 ```python
-PLAYWRIGHT_LAUNCH_OPTIONS = {
+CAMOUFOX_LAUNCH_OPTIONS = {
     "block_images": True,
     "block_webrtc": True,
     # Whether to block WebGL. To prevent leaks, only use this for special cases.
