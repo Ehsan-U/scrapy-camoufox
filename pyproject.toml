@@ -3,7 +3,7 @@ line-length = 99
 
 [tool.poetry]
 name = "scrapy-camoufox"
-version = "0.0.2"
+version = "0.0.3"
 description = "Camoufox Integration For Scrapy"
 authors = ["Ehsan U."]
 readme = "README.md"
