@@ -56,6 +56,7 @@ logger = logging.getLogger("scrapy-camoufox")
 
 DEFAULT_BROWSER_TYPE = "firefox"
 DEFAULT_CONTEXT_NAME = "default"
+PERSISTENT_CONTEXT_BOOL = False
 
 
 @dataclass
@@ -108,6 +109,7 @@ class Config:
         )
         if not cfg.max_pages_per_context:
             cfg.max_pages_per_context = settings.getint("CONCURRENT_REQUESTS")
+        cfg.startup_context_kwargs['PERSISTENT_CONTEXT_BOOL'] = cfg.launch_options.pop("persistent_context", False)
         return cfg
 
 
@@ -187,7 +189,7 @@ class ScrapyCamoufoxDownloadHandler(HTTPDownloadHandler):
             await self.context_semaphore.acquire()
         context_kwargs = context_kwargs or {}
         persistent = False 
-        if self.config.launch_options.pop("persistent_context", False):
+        if context_kwargs.get("PERSISTENT_CONTEXT_BOOL"):
             await self._maybe_launch_browser(persistent=True)
             context = self.browser
             persistent = True
