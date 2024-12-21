@@ -56,7 +56,7 @@ logger = logging.getLogger("scrapy-camoufox")
 
 DEFAULT_BROWSER_TYPE = "firefox"
 DEFAULT_CONTEXT_NAME = "default"
-PERSISTENT_CONTEXT_BOOL = False
+PERSISTENT_CONTEXT_CHECK_KEY = "user_data_dir"
 
 
 @dataclass
@@ -109,7 +109,22 @@ class Config:
         )
         if not cfg.max_pages_per_context:
             cfg.max_pages_per_context = settings.getint("CONCURRENT_REQUESTS")
-        cfg.startup_context_kwargs = {**cfg.startup_context_kwargs, "PERSISTENT_CONTEXT_BOOL": cfg.launch_options.pop("persistent_context", False)}
+        """ e.g from scrapy-playwright
+        CAMOUFOX_CONTEXTS = {
+            "default": {
+                "context_arg1": "value",
+                "context_arg2": "value",
+            },
+            "persistent": {
+                "user_data_dir": "/path/to/dir",  # will be a persistent context
+                "context_arg1": "value",
+            },
+        }
+        """
+        cfg.startup_context_kwargs = {
+            **cfg.startup_context_kwargs, 
+            "persistent": {"user_data_dir": cfg.launch_options.pop("persistent_context", False)}
+        }
         return cfg
 
 
@@ -189,7 +204,7 @@ class ScrapyCamoufoxDownloadHandler(HTTPDownloadHandler):
             await self.context_semaphore.acquire()
         context_kwargs = context_kwargs or {}
         persistent = False 
-        if context_kwargs.get("PERSISTENT_CONTEXT_BOOL"):
+        if context_kwargs.get("PERSISTENT_CONTEXT_CHECK_KEY"): # if context has user_data_dir key then persistent
             await self._maybe_launch_browser(persistent=True)
             context = self.browser
             persistent = True
