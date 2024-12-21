@@ -56,7 +56,6 @@ logger = logging.getLogger("scrapy-camoufox")
 
 DEFAULT_BROWSER_TYPE = "firefox"
 DEFAULT_CONTEXT_NAME = "default"
-PERSISTENT_CONTEXT_PATH_KEY = "user_data_dir"
 
 
 @dataclass
@@ -170,7 +169,7 @@ class ScrapyCamoufoxDownloadHandler(HTTPDownloadHandler):
         async with self.browser_launch_lock:
             if not hasattr(self, "browser"):
                 logger.info("Launching browser")
-                self.browser = await AsyncNewBrowser(playwright=self.playwright, **self.config.launch_options, persistent_context=persistent)
+                self.browser = await AsyncNewBrowser(playwright=self.playwright, from_options=self.config.launch_options, persistent_context=persistent)
                 logger.info("Browser launched")
                 self.stats.inc_value("camoufox/browser_count")
                 self.browser.on("disconnected", self._browser_disconnected_callback)
@@ -188,8 +187,9 @@ class ScrapyCamoufoxDownloadHandler(HTTPDownloadHandler):
             await self.context_semaphore.acquire()
         context_kwargs = context_kwargs or {}
         persistent = False 
-        if context_kwargs.get(PERSISTENT_CONTEXT_PATH_KEY):
-            context = await self._maybe_launch_browser(persistent=True)
+        if self.config.launch_options.pop("persistent_context", False):
+            await self._maybe_launch_browser(persistent=True)
+            context = self.browser
             persistent = True
         else:
             await self._maybe_launch_browser()
