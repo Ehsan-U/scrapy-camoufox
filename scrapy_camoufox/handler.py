@@ -109,7 +109,7 @@ class Config:
         )
         if not cfg.max_pages_per_context:
             cfg.max_pages_per_context = settings.getint("CONCURRENT_REQUESTS")
-        cfg.startup_context_kwargs['PERSISTENT_CONTEXT_BOOL'] = cfg.launch_options.pop("persistent_context", False)
+        cfg.startup_context_kwargs = {**cfg.startup_context_kwargs, "PERSISTENT_CONTEXT_BOOL": cfg.launch_options.pop("persistent_context", False)}
         return cfg
 
 
