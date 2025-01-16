@@ -121,10 +121,6 @@ class Config:
             },
         }
         """
-        cfg.startup_context_kwargs = {
-            **cfg.startup_context_kwargs, 
-            "persistent": {"user_data_dir": cfg.launch_options.pop("persistent_context", False)}
-        }
         return cfg
 
 
