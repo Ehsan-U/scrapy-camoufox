@@ -182,7 +182,7 @@ class ScrapyCamoufoxDownloadHandler(HTTPDownloadHandler):
         async with self.browser_launch_lock:
             if not hasattr(self, "browser"):
                 logger.info("Launching browser")
-                self.browser = await AsyncNewBrowser(playwright=self.playwright, from_options=self.config.launch_options, persistent_context=persistent)
+                self.browser = await AsyncNewBrowser(playwright=self.playwright, **self.config.launch_options, persistent_context=persistent)
                 logger.info("Browser launched")
                 self.stats.inc_value("camoufox/browser_count")
                 self.browser.on("disconnected", self._browser_disconnected_callback)
